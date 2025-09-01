@@ -9,13 +9,11 @@ import {
   Group,
   Checkbox,
   ActionIcon,
-  useMantineColorScheme,
 } from "@mantine/core";
 import { IconTrash } from "@tabler/icons-react";
 import { LoremIpsum } from "lorem-ipsum";
 import { randomId } from "@mantine/hooks";
 import { v4 as uuidv4 } from "uuid";
-
 interface Task {
   id: string;
   title: string;
@@ -33,7 +31,6 @@ export default function HomePage() {
       description: "Vite + React + Mantine + TS",
       isDone: false,
       dueDate: new Date(),
-      doneAt: null,
     },
     {
       id: "2",
@@ -41,7 +38,6 @@ export default function HomePage() {
       description: "Finish project for class",
       isDone: false,
       dueDate: new Date(),
-      doneAt: null,
     },
     {
       id: "3",
@@ -49,16 +45,17 @@ export default function HomePage() {
       description: "Push project to GitHub Pages",
       isDone: false,
       dueDate: new Date(),
-      doneAt: null,
     },
   ]);
-
-  const { colorScheme } = useMantineColorScheme();
-  const isDark = colorScheme === "dark";
-
   const lorem = new LoremIpsum({
-    sentencesPerParagraph: { max: 8, min: 4 },
-    wordsPerSentence: { max: 16, min: 4 },
+    sentencesPerParagraph: {
+      max: 8,
+      min: 4,
+    },
+    wordsPerSentence: {
+      max: 16,
+      min: 4,
+    },
   });
 
   const handleAdd = () => {
@@ -68,24 +65,21 @@ export default function HomePage() {
       description: lorem.generateWords(10),
       isDone: false,
       dueDate: new Date(),
-      doneAt: null,
     };
     setTasks((prev) => [...prev, newTask]);
   };
 
+  // Delete task
   const deleteTask = (taskId: string) => {
     setTasks((prev) => prev.filter((task) => task.id !== taskId));
   };
 
+  // Toggle done
   const toggleDoneTask = (taskId: string) => {
     setTasks((prev) =>
       prev.map((t) =>
         t.id === taskId
-          ? {
-              ...t,
-              isDone: !t.isDone,
-              doneAt: !t.isDone ? new Date() : null,
-            }
+          ? { ...t, isDone: !t.isDone, doneAt: !t.isDone ? new Date() : null }
           : t
       )
     );
@@ -96,11 +90,13 @@ export default function HomePage() {
       <Stack align="center">
         <Title order={2}>Todo List</Title>
         <Text size="sm" c="dimmed">
+          
           All : {tasks.length} | Done : {tasks.filter((t) => t.isDone).length}
         </Text>
+        {/* เพิ่ม Task */}
+        <Button onClick={handleAdd} variant="filled" color="cyan" >Add Task </Button>
 
-        <Button onClick={handleAdd}>Add Task</Button>
-
+         {/* แสดง Task Cards */}
         <Stack w="100%">
           {tasks.map((task) => (
             <Card withBorder shadow="sm" radius="md" mb="sm" key={task.id}>
@@ -117,34 +113,31 @@ export default function HomePage() {
                   <Text size="sm" c="dimmed">
                     {task.description}
                   </Text>
-
                   {task.dueDate && (
                     <Text size="xs" c="gray">
                       Due: {task.dueDate.toLocaleDateString()}
                     </Text>
                   )}
-
-                  {task.doneAt && (
-                    <Text size="xs" c={isDark ? "yellow" : "purple"}>
+                  {task.isDone && task.doneAt && (
+                    <Text size="xs" c="Champ">
                       Done at: {task.doneAt.toLocaleString()}
                     </Text>
                   )}
                 </Stack>
-
+        
                 <Group>
                   <Checkbox
-                    label="Done"
-                    color="green"
                     checked={task.isDone}
-                    onClick={() => toggleDoneTask(task.id)}
+                    onChange={() => toggleDoneTask(task.id)}
+                    label = "Done"
+                    color="cyan"
                   />
-
                   <ActionIcon
-                    variant="light"
                     color="red"
+                    variant="light"
                     onClick={() => deleteTask(task.id)}
                   >
-                    <IconTrash color="red" size={20} stroke={2} />
+                    <IconTrash size={18} />
                   </ActionIcon>
                 </Group>
               </Group>
