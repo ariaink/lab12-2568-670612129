@@ -47,7 +47,7 @@ export default function Sidebar() {
         <Indicator color="green" processing>
             <Avatar src="/image.png" radius="xl" />
           </Indicator>
-        <Text>Rungphailin Tnanamsaeng Student</Text>
+        <Text>Rungphailin Tnanamsaeng : student</Text>
         </Group>
          
       </Box>
