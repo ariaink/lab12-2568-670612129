@@ -40,14 +40,14 @@ export default function Sidebar() {
           Test
         </Text> */}
       </Box>
-      {/* แสดงผู้ใช้งาน */}
+    
 
       <Box p={10}>
          <Group>
         <Indicator color="green" processing>
             <Avatar src="/image.png" radius="xl" />
           </Indicator>
-        <Text>Rungphailin Student</Text>
+        <Text>Rungphailin Tnanamsaeng Student</Text>
         </Group>
          
       </Box>
